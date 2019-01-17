@@ -58,7 +58,7 @@ KeyboardInputManager.prototype.listen = function () {
     if (!modifiers) {
       if (mapped !== undefined) {
         event.preventDefault();
-        self.emit("move", mapped);
+        self.emit("move", mapped); //Note key event signal is transferred.
       }
     }
 

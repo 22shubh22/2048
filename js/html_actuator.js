@@ -91,7 +91,7 @@ HTMLActuator.prototype.addTile = function (tile) {
 };
 
 HTMLActuator.prototype.applyClasses = function (element, classes) {
-  element.setAttribute("class", classes.join(" "));
+  element.setAttribute("class", classes.join(" "));     //Kuch to log kahenge.
 };
 
 HTMLActuator.prototype.normalizePosition = function (position) {
