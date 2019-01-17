@@ -52,16 +52,14 @@ HTMLActuator.prototype.addTile = function (tile) {
   var wrapper   = document.createElement("div");
   var inner     = document.createElement("div");
   var position  = tile.previousPosition || { x: tile.x, y: tile.y };
-  var positionClass = this.positionClass(position);
+  var positionClass = this.positionClass(position);   //possition Class in a string type.
 
   // We can't use classlist because it somehow glitches when replacing classes
-  var classes = ["tile", "tile-" + tile.value, positionClass];
+  var classes = ["tile", "tile-" + tile.value, positionClass];   //"tile", "tile- title.value" , "tile-position-" + position.x + "-" + position.y" 
 
-  if (tile.value > 2048) classes.push("tile-super");
+  this.applyClasses(wrapper, classes); //wrapper ka ek attribute set ho gya.   
 
-  this.applyClasses(wrapper, classes);
-
-  inner.classList.add("tile-inner");
+  inner.classList.add("tile-inner"); //tile-inner
   inner.textContent = tile.value;
 
   if (tile.previousPosition) {
@@ -69,14 +67,6 @@ HTMLActuator.prototype.addTile = function (tile) {
     window.requestAnimationFrame(function () {
       classes[2] = self.positionClass({ x: tile.x, y: tile.y });
       self.applyClasses(wrapper, classes); // Update the position
-    });
-  } else if (tile.mergedFrom) {
-    classes.push("tile-merged");
-    this.applyClasses(wrapper, classes);
-
-    // Render the tiles that merged
-    tile.mergedFrom.forEach(function (merged) {
-      self.addTile(merged);
     });
   } else {
     classes.push("tile-new");
