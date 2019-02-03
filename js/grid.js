@@ -77,6 +77,7 @@ Grid.prototype.cellOccupied = function (cell) {
   return !!this.cellContent(cell);
 };
 
+// returns contents of a cell.
 Grid.prototype.cellContent = function (cell) {
   if (this.withinBounds(cell)) {
     return this.cells[cell.x][cell.y];
