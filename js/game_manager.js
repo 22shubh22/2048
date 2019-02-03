@@ -186,6 +186,27 @@ GameManager.prototype.buildTraversals = function (vector) {
   return traversals;
 };
 
+GameManager.prototype.abc = function (vector) {
+  var previous;
+
+  var availCells = this.grid.availableCells();
+  previous = availCells[0];
+
+  //move tile
+
+  // Progress towards the vector direction until an obstacle is found
+  do {
+    previous = cell;
+    cell     = { x: previous.x + vector.x, y: previous.y + vector.y };
+  } while (this.grid.withinBounds(cell) &&
+           this.grid.cellAvailable(cell));
+
+  return {
+    farthest: previous,
+    next: cell // Used to check if a merge is required
+  };
+};
+
 GameManager.prototype.findFarthestPosition = function (cell, vector) {
   var previous;
 
