@@ -91,6 +91,7 @@ GameManager.prototype.actuate = function () {
 
 // Represent the current game as an object
 GameManager.prototype.serialize = function () {
+  //console.log("serialise working");
   return {
     grid:        this.grid.serialize(),
     score:       this.score,
@@ -126,35 +127,22 @@ GameManager.prototype.move = function (direction) {
   var cell, tile;
 
   var vector     = this.getVector(direction);
-  console.log(vector);
-  var traversals = this.buildTraversals(vector);
+
+  var available_cell = this.grid.availableCells();
+
+  if((available_cell[0].x == 2 && vector.x == -1) || (available_cell[0].y == 2 && vector.y == -1) || (available_cell[0].x == 0 && vector.x == 1) || (available_cell[0].y == 0 && vector.y == 1)){
+
+  } else {
+    cell = { x: available_cell[0].x - vector.x, y: available_cell[0].y - vector.y };
+    //console.log(cell);
+    tile = self.grid.cellContent(cell);
+
+    this.moveTile(tile, available_cell[0]);
+  }
   var moved      = false;
 
   // Save the current tile positions and remove merger information
   this.prepareTiles();
-
-  // Traverse the grid in the right direction and move tiles
-  traversals.x.forEach(function (x) {
-    traversals.y.forEach(function (y) {
-      cell = { x: x, y: y };
-      tile = self.grid.cellContent(cell);
-
-      if (tile) {
-        var positions = self.findFarthestPosition(cell, vector);
-        var next      = self.grid.cellContent(positions.next);
-
-        // Only one merger per row traversal?
-        
-      self.moveTile(tile, positions.farthest);
-        
-
-      if (!self.positionsEqual(cell, tile)) {
-        moved = true; // The tile moved from its original cell!
-      }
-    }
-    });
-  });
-
   this.actuate();
 };
 
@@ -175,8 +163,6 @@ GameManager.prototype.getVector = function (direction) {
 GameManager.prototype.buildTraversals = function (vector) {
   var traversals = { x: [], y: [] };
 
-  console.log(this.size);
-
   for (var pos = 0; pos < this.size; pos++) {
     traversals.x.push(pos);
     traversals.y.push(pos);
@@ -186,7 +172,9 @@ GameManager.prototype.buildTraversals = function (vector) {
   if (vector.x === 1) traversals.x = traversals.x.reverse();
   if (vector.y === 1) traversals.y = traversals.y.reverse();
 
+  console.log("traversals" + traversals);
   return traversals;
+  
 };
 
 GameManager.prototype.abc = function (vector) {

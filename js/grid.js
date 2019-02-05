@@ -38,6 +38,7 @@ Grid.prototype.randomAvailableCell = function () {
   var cells = this.availableCells();
 
   if (cells.length) {
+    //console.log(cells[Math.floor(Math.random() * cells.length)])
     return cells[Math.floor(Math.random() * cells.length)];
   }
 };
@@ -89,6 +90,7 @@ Grid.prototype.cellContent = function (cell) {
 // Inserts a tile at its position
 Grid.prototype.insertTile = function (tile) {
   this.cells[tile.x][tile.y] = tile;
+  //console.log(this.availableCells());
 };
 
 Grid.prototype.removeTile = function (tile) {
